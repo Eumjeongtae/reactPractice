@@ -8,12 +8,11 @@ function App() {
   let [글제목, b] = useState( ['남자코트 추천', '강남 우동맛집', '파이썬 독학'] );
   let [logo,setLogo] = useState('ReactBlog')
   let [따봉,따봉변경] = useState([1,2,3])
-  let [modal,setModal] = useState(false)
+  let [modal,setModal] = useState([false])
+  let [origin,yht] = useState(0)
+  let [입력값,입력값변경] = useState('')
 
-  var 어레이 = [2,3,4];
-어레이.map(function(a){
-  return '12321'
-});
+
 
 function btn(){
   let change = [...글제목]
@@ -33,21 +32,30 @@ function btn(){
       글제목.map(function(a,i){
         return (
           <div className="list" key={i}>
-        <h4 onClick={()=> {setModal(true)}}>{글제목[i]}<span onClick={()=>{
+        <h4 onClick={()=> {setModal(true); yht(i);console.log(yht)}}>{글제목[i]}<span onClick={(e)=>{
           let like =[...따봉]
           like[i]=like[i]+1
-          따봉변경(like)
+          따봉변경(like);
+          e.stopPropagation();
         }}>👍</span> {따봉[i]}  </h4>
         <p>2월 17일 발행</p>
       </div>
         )
       })
     }
-
-      
+  <input onChange={(e)=>{
+    입력값변경(e.target.value); 
+    
+  }} type="text"/>
+      <button onClick={()=>{
+        let newWrite =[...글제목]
+        newWrite.unshift(입력값)
+        b(newWrite)
+      }}>발행</button>
       {
-        modal == true ? <Modal btn={btn}  글제목={글제목}/> : null
+        modal == true ? <Modal btn={btn} yht={yht}  setModal={setModal} origin={origin} 글제목={글제목}/> : null
       }
+   
 
     </div>
   );
@@ -55,12 +63,14 @@ function btn(){
 
 function Modal(props){
  return(
+
   <div className="modal">
-  <h4>{props.글제목[0]}</h4>
+  <h4>{props.글제목[props.origin]}</h4>
   <p>날짜</p>
   <p>상세내용</p>
   <button onClick={props.btn}>글수정</button>
 </div>
+
  )
 }
 
