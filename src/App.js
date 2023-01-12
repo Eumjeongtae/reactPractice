@@ -39,6 +39,11 @@ function btn(){
           e.stopPropagation();
         }}>👍</span> {따봉[i]}  </h4>
         <p>2월 17일 발행</p>
+          <button onClick={()=>{
+          let remove = [...글제목]
+          remove.splice(i, 1);
+          b(remove)
+        }}>삭제</button>
       </div>
         )
       })
